@@ -1,8 +1,14 @@
+from django.urls import include, path
 from django.contrib import admin
-from django.urls import path
-from school.views import get_students
+from rest_framework import routers
+from school.views import CourseViewSet, EnrollmentViewSet, StudentViewSet
+
+router = routers.DefaultRouter()
+router.register('courses', CourseViewSet, basename='Courses')
+router.register('students', StudentViewSet, basename='Students')
+router.register('enrollments', EnrollmentViewSet, basename='Enrollments')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('students/', get_students, name='get_students')
+    path('', include(router.urls))
 ]
